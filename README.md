@@ -88,8 +88,52 @@ Ensure that you no longer need the infrastructure before running this command.
 This project is licensed under the MIT License. Feel free to use, modify, and distribute it as needed.
 
 ## Author
-- **William Barstad** - [willismbarstad.com](https://williambarstad.com)
+- **William Barstad** - [williambarstad.com](https://williambarstad.com)
 
 ## Contact
 If you have any questions, please feel free to reach out at william@williambarstad.com.
 
+## Cost Estimate
+```
+Name                                                       Monthly Qty  Unit              Monthly Cost
+──────────────────────────────────                         ─────── ─── ─────      ────────────────────
+aws_nat_gateway.nat
+├─ NAT gateway                                                     730  hours                   $32.85
+└─ Data processed                                       Monthly cost depends on usage: $0.045 per GB
+
+aws_autoscaling_group.web_asg
+└─ aws_launch_configuration.web_lc
+   ├─ Instance usage (Linux/UNIX, on-demand, t3.micro)           1,460  hours                   $15.18
+   ├─ EC2 detailed monitoring                                       14  metrics                  $4.20
+   └─ root_block_device
+      └─ Storage (general purpose SSD, gp2)                         16  GB                       $1.60
+
+aws_lb.app_lb
+├─ Application load balancer                                       730  hours                   $16.43
+└─ Load balancer capacity units                         Monthly cost depends on usage: $5.84 per LCU
+
+aws_instance.bastion
+├─ Instance usage (Linux/UNIX, on-demand, t3.micro)                730  hours                    $7.59
+└─ root_block_device
+   └─ Storage (general purpose SSD, gp2)                             8  GB                       $0.80
+
+aws_cloudwatch_log_group.flow_logs_group
+├─ Data ingested                                        Monthly cost depends on usage: $0.50 per GB
+├─ Archival Storage                                     Monthly cost depends on usage: $0.03 per GB
+└─ Insights queries data scanned                        Monthly cost depends on usage: $0.005 per GB
+
+OVERALL TOTAL                                                                                  $78.65
+
+*Usage costs can be estimated by updating Infracost Cloud settings, see docs for other options.
+
+──────────────────────────────────
+27 cloud resources were detected:
+∙ 5 were estimated
+∙ 22 were free
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━┓
+┃ Project                                            ┃ Baseline cost ┃ Usage cost* ┃ Monthly cost┃ Hourly cost ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━┛
+┃ main                                               ┃           $79 ┃           - ┃        $79  ┃       $0.11 ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━┻━━━━━━━━━━━━━┻━━━━━━━━━━━━━┛
+```
